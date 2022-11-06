@@ -1,3 +1,4 @@
+import { Button, TextField } from "@mui/material";
 import React, { ChangeEvent, useState } from "react";
 import styled from "styled-components";
 
@@ -38,18 +39,19 @@ function App() {
 
   return (
     <Container>
-      <StyledLabel htmlFor="angle-input">
-        Enter an Angle Between 0 and 360
-      </StyledLabel>
-      <StyledInput
+      <TextField
         onChange={(e: ChangeEvent<HTMLInputElement>) =>
           handleUpdateAngle(e.target.value)
         }
         value={angle}
-        id="angle-input"
+        label="Enter an Angle Between 0 and 360"
       />
-      <StartButton onClick={handleClickStart}>Start</StartButton>
-      <EndButton onClick={handleClickEnd}>End</EndButton>
+      <Button variant="contained" onClick={handleClickStart}>
+        Start
+      </Button>
+      <Button variant="contained" onClick={handleClickEnd}>
+        End
+      </Button>
     </Container>
   );
 }
@@ -62,22 +64,10 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   padding: 36px 12px 12px 0;
-`;
 
-const StyledInput = styled.input`
-  width: 36px;
-`;
-
-const StyledLabel = styled.label``;
-
-const StyledButton = styled.button``;
-
-const StartButton = styled(StyledButton)`
-  background-color: green;
-`;
-
-const EndButton = styled(StyledButton)`
-  background-color: red;
+  & > * {
+    margin-top: 24px !important;
+  }
 `;
 
 export default App;
