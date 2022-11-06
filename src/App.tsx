@@ -38,28 +38,34 @@ function App() {
   }
 
   return (
-    <Container>
-      <TextField
-        onChange={(e: ChangeEvent<HTMLInputElement>) =>
-          handleUpdateAngle(e.target.value)
-        }
-        value={angle}
-        label="Enter an Angle Between 0 and 360"
-      />
-      <Button variant="contained" onClick={handleClickStart}>
-        Start
-      </Button>
-      <Button variant="contained" onClick={handleClickEnd}>
-        End
-      </Button>
-    </Container>
+    <OuterContainer>
+      <InnerContainer>
+        <TextField
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            handleUpdateAngle(e.target.value)
+          }
+          value={angle}
+          label="Enter an Angle Between 0 and 360"
+        />
+        <Button size="large" variant="contained" onClick={handleClickStart}>
+          Start
+        </Button>
+        <Button size="large" variant="contained" onClick={handleClickEnd}>
+          End
+        </Button>
+      </InnerContainer>
+    </OuterContainer>
   );
 }
 
-const Container = styled.div`
-  margin-left: 50%;
-  transform: translateX(-50%);
-  max-width: 360px;
+const OuterContainer = styled.div`
+  display: flex;
+  justify-content: center;
+`;
+
+const InnerContainer = styled.div`
+  width: 80%;
+  max-width: 480px;
   display: flex;
   flex-direction: column;
   justify-content: center;
