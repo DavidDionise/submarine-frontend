@@ -1,7 +1,8 @@
 import React, { ChangeEvent, useState } from "react";
 import styled from "styled-components";
 
-const apiBaseUrl = process.env.API_BASE_URL || "http://localhost:8082";
+const apiBaseUrl =
+  process.env.REACT_APP_API_BASE_URL || "http://localhost:8082";
 
 function App() {
   const [angle, setAngle] = useState(0);
