@@ -6,24 +6,45 @@ const apiBaseUrl =
   process.env.REACT_APP_API_BASE_URL || "http://localhost:8082";
 
 function App() {
-  const [angle, setAngle] = useState(0);
+  const [angle, setAngle] = useState("0");
+  const [pidGain, setPidGain] = useState("1");
 
   function handleUpdateAngle(updatedAngle: string) {
-    const validInput =
-      /^\d*$/.test(updatedAngle) && +updatedAngle >= 0 && +updatedAngle < 360;
+    if (updatedAngle == "") {
+      setAngle("");
+    } else {
+      const validInput =
+        /^\d*$/.test(updatedAngle) && +updatedAngle >= 0 && +updatedAngle < 360;
 
-    if (validInput) {
-      setAngle(+updatedAngle);
+      if (validInput) {
+        setAngle(updatedAngle);
+      }
+    }
+  }
+
+  function handleUpdatePidGain(updatedPidGain: string) {
+    if (updatedPidGain == "") {
+      setPidGain("");
+    } else {
+      const validInput = /^\d*$/.test(updatedPidGain);
+
+      if (validInput) {
+        setPidGain(updatedPidGain);
+      }
     }
   }
 
   function handleClickStart() {
+    const reqBody = {
+      status: "ACTIVE",
+      data: { setHead: +angle, pid: { gain: +pidGain } },
+    };
     fetch(`${apiBaseUrl}/command`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ status: "ACTIVE", data: { setHead: angle } }),
+      body: JSON.stringify(reqBody),
     });
   }
 
@@ -45,7 +66,16 @@ function App() {
             handleUpdateAngle(e.target.value)
           }
           value={angle}
-          label="Enter an Angle Between 0 and 360"
+          label="Enter an Angle"
+          placeholder="Integer Between 0 and 360"
+        />
+        <TextField
+          onChange={(e: ChangeEvent<HTMLInputElement>) =>
+            handleUpdatePidGain(e.target.value)
+          }
+          value={pidGain}
+          label="Enter PID Gain"
+          placeholder="Positive Integer"
         />
         <Button size="large" variant="contained" onClick={handleClickStart}>
           Start
