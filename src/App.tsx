@@ -26,7 +26,7 @@ function App() {
     if (updatedPidGain == "") {
       setPidGain("");
     } else {
-      const validInput = /^\d*$/.test(updatedPidGain);
+      const validInput = /^\d*(\.|\d*)\d*$/.test(updatedPidGain);
 
       if (validInput) {
         setPidGain(updatedPidGain);
@@ -75,7 +75,7 @@ function App() {
           }
           value={pidGain}
           label="Enter PID Gain"
-          placeholder="Positive Integer"
+          placeholder="Positive Number"
         />
         <Button size="large" variant="contained" onClick={handleClickStart}>
           Start
