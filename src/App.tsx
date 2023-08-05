@@ -3,7 +3,10 @@ import React, { ChangeEvent, useState } from "react";
 import styled from "styled-components";
 
 const apiBaseUrl =
-  process.env.REACT_APP_API_BASE_URL || "http://localhost:8082";
+  process.env.REACT_APP_GOTIFY_BASE_URL;
+
+const gotifyToken = 
+  process.env.REACT_APP_GOTIFY_TOKEN
 
 function App() {
   const [angle, setAngle] = useState("0");
@@ -36,25 +39,30 @@ function App() {
 
   function handleClickStart() {
     const reqBody = {
-      status: "ACTIVE",
-      data: { setHead: +angle, pid: { gain: +pidGain } },
+      message: "ACTIVE",
+      extras: {
+          set_head: 180,
+          esc_motor_value: 0.2
+      }
     };
-    fetch(`${apiBaseUrl}/command`, {
+    fetch(`${apiBaseUrl}/message`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${gotifyToken}`
       },
       body: JSON.stringify(reqBody),
     });
   }
 
   function handleClickEnd() {
-    fetch(`${apiBaseUrl}/command`, {
+    fetch(`${apiBaseUrl}/message`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
+        "Authorization": `Bearer ${gotifyToken}`
       },
-      body: JSON.stringify({ status: "STOP" }),
+      body: JSON.stringify({ message: "STOP" }),
     });
   }
 
