@@ -41,7 +41,7 @@ function App() {
     const reqBody = {
       message: "ACTIVE",
       extras: {
-          set_head: 180,
+          set_head: angle,
           esc_motor_value: 0.2
       }
     };
